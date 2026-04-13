@@ -1,0 +1,28 @@
+title: Ayush Gupta
+author: Ayush Gupta
+subtitle: ML Engineer · IIT (BHU) · Building things that think
+
+url: "https://ayushgupta235.github.io"
+baseurl: ""
+
+footer_only_homepage: true
+footer_url: "https://github.com/AyushGupta235"
+footer_text: "ayush1000gupta@gmail.com"
+
+profile-picture: assets/profile.png
+favicon_location: assets/favicon.ico
+
+permalink: /:year-:month-:day-:title/
+sass:
+    style: compressed
+    sass_dir: css
+
+navbar:
+ - name: "About"
+   link: "about"
+ - name: "Projects"
+   link: "projects"
+ - name: "Blog"
+   link: ""
+ - name: "Resume"
+   absolute-link: "https://drive.google.com/file/d/1FPYQPfjzgNwOVGhkN6hTpybp66xoUZlE/view"
