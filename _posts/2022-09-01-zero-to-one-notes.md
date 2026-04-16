@@ -1,150 +1,209 @@
 ---
 layout: post
 title: "Book Notes: Zero to One by Peter Thiel"
-subtitle: "Notes on startups, monopolies, and contrarian thinking"
-tags: [books, notes, entrepreneurship, startups]
+subtitle: "Notes on Startups"
+tags: [books, notes, entrepreneurship]
 ---
 
-**Rating:** ⭐️⭐️⭐️ &nbsp; | &nbsp; **Domain:** Entrepreneurship
-
-> Mental exercise before reading: *What important truth do very few people agree with you on?*
-
----
-
-### 0→1 vs. 1→n
-
-- **0→1 (Vertical):** Technology — creating something genuinely new
-- **1→n (Horizontal):** Globalization — spreading what already exists
-
-Globalization without technological progress depletes resources. The steam engine spread worldwide and burned through fossil fuels. Without 0→1 innovation, 1→n just accelerates scarcity.
-
-> "A startup is the largest group of people you can convince to build a new future."
+**Rating:** ⭐️⭐️⭐️ &nbsp;|&nbsp; **Domain:** Entrepreneurship
 
 ---
 
-### Lessons from the Dot-Com Bubble
+💡 Mental exercise to get your contrarian thinking running before reading the summary: What important truth do very few people agree with you on?
 
-The dot-com bust created a set of Silicon Valley survival rules that became dogma: be lean, iterate, don't plan too far ahead. Thiel argues these rules are wrong in the opposite direction from the original mistake.
+#### Unsustainability of Globalization
 
-- Taking small incremental steps is safe, not optimal
-- A bad plan is better than no plan
-- Saturated competitive markets destroy margins (airlines: 37 cents profit per $178 ticket)
-- Sales matters as much as the product
+- 0 → 1: Vertical Progress = Technology
+- 1 → n: Horizontal Progress = Globalization
 
-The founders of that era were actually looking far into the future and believed technology would get there. What differed was that they believed they were capable of building it.
+Spreading old ways (old because 0 → 1 technological journey has been completed) across the world through globalization to create wealth leads to devastation
 
-> What valuable company is nobody building?
+1 → n does not involve technological progress i.e. no improvement in efficiency of utilization of resources
 
----
+Globalization leads to spreading of ways that don't further optimize resource utilization, i.e. this leads to scarcity of resources
 
-### Monopoly vs. Competition
+For example, globalization of steam engine led to depletion of fossil fuel resources
 
-Capitalism and competition are opposites. Under perfect competition, all profits get competed away.
+Hence, 0 → 1 journey of technological progress is necessary for the sustenance of life on earth
 
-**Monopolies lie:** They exaggerate their competition to avoid regulatory scrutiny. Google in 2014 owned 68% of search — but framed itself as a small player in the vast "tech products" market (0.24% share).
+> "A startup is the largest group of people you can convince to build a new future. A new company's most important strength new thinking: even more important than nimbleness, small size affords space to think" - Peter Thiel
 
-**Non-monopolists lie:** They describe their market so narrowly that they dominate by definition. "British food restaurant in Palo Alto" — as if that's the relevant market, not "restaurants in Palo Alto."
+#### Lessons from dot-com bubble
 
-> All happy companies are different: each earns a monopoly by solving a unique problem. All failed companies are the same: they failed to escape competition.
+The boldness to take risk is much more valuable than being trivial in pursuit. Taking small incremental steps is a safe way, but not the ideal path forward
 
----
+Having a bad plan is better than having no plan at all
 
-### How to Build a Monopoly
+Entering into a highly saturated competitive market leads to lack of profitability due to cut-throat margins caused by the same competition, eg: the airlines business
 
-Four factors:
+Sales is just as important as the product.
 
-1. **Proprietary Technology** — At least 10x better than the closest substitute. Anything less is easily replicated.
+Many regarded 2000 (the crashing of the dot-com bubble) as the peak of insanity, but it was actually the peak of insanity + clarity. Founders were looking far into the future, and they knew that tech is needed to get there. The biggest difference from today was that they considered themselves capable of it.
 
-2. **Network Effects** — The product becomes more valuable as more people use it. Start with a small, perfect market and expand. (WhatsApp works in India because *everyone* is already on WhatsApp.)
+💡 What valuable company is no one building? This question is harder than it looks. A company can create value without being valuable itself, i.e. it doesn't capture the value it creates for self. Eg: Back in 2012, when US airlines were serving millions of customers and creating billions of dollars in revenue, the average airfare was $178, but the companies made only 37 cents per passenger.
 
-3. **Economies of Scale** — Fixed costs spread over scale. Software businesses are the natural case — copying software costs nearly nothing.
+### Monopoly and Competition
 
-4. **Brand** — Powerful, but dangerous to build before having substance. Apple's brand is backed by hardware design, materials, and software cohesion.
+Capitalism and competition are opposites: capitalism is premised on the accumulation of capital, but under perfect competition all profits get competed away. If you want to create and capture lasting value, don't build an undifferentiated commodity business.
 
-**Disruption** is currently misused as a synonym for "new and trendy." Real disruption means using new technology to produce a low-end product cheaply, improving over time, and eventually taking the premium market (OnePlus vs. Apple in several markets).
+Most businesses are actually very close to the extremes of competition or monopoly: they are incentivized to bend the truth by describing market conditions in self serving ways
 
-The better goal: **be the last mover**, not the first. Make the last great development in a market and enjoy monopoly profits for years.
+#### Monopolies
 
----
+Monopolies lie to protect themselves, since bragging will lead to audits, scrutinization, and attacks. They try to conceal their monopoly by exaggerating power of their (non-existential) competition
 
-### The Future: Four Quadrants
+In 2014, Google owned 68% of the search market. It has dominated the market to such an extent that "google" is now a verb in Oxford dictionary. By framing itself like just another tech company, owning just 0.24% of tech products market, Google escapes all unwanted attention
 
-- **Indefinite Pessimism:** The future will be bad and I don't know what to do
-- **Definite Pessimism:** The future will be bad and I'm preparing for it
-- **Indefinite Optimism:** The future will be better somehow, so I won't plan specifically
-- **Definite Optimism:** The future will be better if I plan and build for it
+#### Competition
 
-> Long-term planning is undervalued by our indefinitely optimistic short-term world.
+Non-monopolists say "we're in a league of our own". They describe their market so narrowly so that they dominate by definition, e.g., starting a restaurant that serves British food in Palo Alto. There are tons of restaurants in Palo Alto, but by framing their target market in such a way, non-monopolists try to suggest that they're highly differentiated and dominate the narrowly-defined market.
 
----
+> Only one thing can allow a business to transcend the daily brute struggle for survival: monopoly profits
 
-### The Power Law in Venture Capital
+All happy families are alike; each unhappy family is unhappy in its own way. Business is the opposite. All happy companies are different: each one earns a monopoly by solving a unique problem. All failed companies are the same: they failed to escape competition.
 
-Returns in VC don't follow a normal distribution — they follow a **power law**: a few investments return more than all others combined.
+Some companies may have to fight each other for the same market, in the same situation, a company must fight to win. No middle-ground, no punches, just strike hard and end quick
 
-Diversification in a VC portfolio is a mistake if it dilutes focus on the few companies that could return the fund. Every company in the portfolio must have the potential to succeed *at scale*.
+### How to become a monopoly? 4 factors to consider
 
-Why don't people see this? Unorthodox ideas are rarely taken seriously. And secrets — genuinely hidden truths — require believing they exist before you can find them.
+**Proprietary Technology:** Your technological innovation must be at least 10x better than the closest competitor, making it impossible to beat and very sustainable
 
-> If you don't believe in something, you won't search for it. Belief in secrets is an effective truth.
+**Network Effects:** When a group of people starts using a product, another group notices the same and starts using it too. For example, Indians use WhatsApp and not iMessage because everyone they know is already on WhatsApp. For that, start with a small market, perfect the product, and expand further
 
----
+**Economies of Scale:** The company's design must be fit to become large, so that the fixed costs of creating the product can be spread over scale. Software startups enjoy dramatic economies of scale since creating another copy of a piece of software is close to zero
 
-### Secrets
+**Brand:** Creating a strong brand is a powerful way to claim a monopoly. For example, Apple has its attractive looks, premium-feeling materials, and sleek minimalistic design to back its brand. But, beginning with brand rather than substance is dangerous.
 
-Contrarian thinking only makes sense if the world still has undiscovered truths. To say no more startups can be built is to say all injustices have been fixed.
+💡 **Disruption:** The process of using new technology to produce a low-end product at a low price, improving over time, and then overtaking the premium market. For example, OnePlus overtaking Apple in several markets. However, nowadays disruptive technology is defined as "trendy and new". This transforms one's thinking into a competitive nature.
 
-Where to look: things that haven't been standardized yet. The best problems are the ones no one else is trying to solve.
+It's much better to be a last mover: making the last great development in a specific market and enjoy years (or even decades) of monopoly profits. The first to dominate → last to move
 
-> Tell secrets to whoever you need to, and no more. The golden mean between nobody and everyone is a company.
+### What Does the Future Hold?
 
----
+**Indefinite Pessimism:** Such a person looks out to the bleak future but does not have any idea what to do about it
 
-### Foundations
+**Definite Pessimism:** They know that the future can be known and will be bleak, and hence, they prepare for it
 
-**Thiel's Law:** A startup messed up at the foundations cannot be fixed.
+**Definite Optimism:** A definite optimist knows that the future will be better than the present if they plan and work for it
 
-Three distinct roles at any company:
-- **Ownership** — who legally owns equity
-- **Possession** — who runs day-to-day operations
-- **Control** — who formally governs
+**Indefinite Optimism:** The person believes that the future will be better, but they don't know how exactly, so they don't make any specific plans
 
-When a CEO earns purely on stock tied to current shareholder value, thinking shifts from long-term to short-term.
+> Long-term planning is undervalued by our indefinite short-term world
 
-Board size: 3 is ideal, maximum 5. Public company average is 9 — too many cooks.
+### Venture Capitalism
 
-High cash compensation leads people to protect existing value rather than create new value. Equity aligns long-term.
+💡 **Pareto Principle:** 80% of the outcomes arise on account of 20% of efforts
 
----
+Returns in venture capitalism do not follow a normal distribution, rather, they follow the Power Law, i.e. very few companies have extremely high returns which are greater than all other companies' returns combined
 
-### Sales
+If focus is laid on diversification instead of a single-minded pursuit of the few companies that can become overwhelmingly valuable, you'll miss those rare companies in the first place.
 
-> Superior sales and distribution can create a monopoly even without product differentiation. The converse is not true.
+Every single company in a VC fund must have the potential to succeed at scale
 
-Obvious sales pitches are easy to resist — so effective advertising works subtly, embedding impressions that drive decisions later. Great sales are hidden in plain sight.
+#### Why people don't see the Power Law?
 
-Distribution channels matter as much as the product. Just one working channel can make a company. You also need to sell to investors, employees, and the media — not just customers.
+Very few people take unorthodox ideas seriously and consider it to be equal to progress
 
-The **LTV > CAC** rule: the lifetime value of a customer must exceed the average cost of acquiring them.
+There aren't any crazy cults anymore → the gain of it has the cost of given up sense of wonder at secrets to discover
 
----
+#### How to effectively use the Power Law?
 
-### Technology and Humans
+You should focus relentlessly on something you're good at doing, but before you must think hard about whether it will be valuable in the future.
 
-Big data is usually dumb data. Computers crunch numbers but can't compare across different sources or interpret complex human behavior. Actionable insights come from human analysts.
+### Identifying "Secrets"
 
-The point isn't that technology replaces humans — it's that technology lets humans escape competition by doing what machines can't.
+Contrarian thinking wouldn't make sense if the world didn't have any secrets to give up. To say that no more technological innovation can be done now, i.e. no more startups can be built, would be to say that there are no more secrets, which would mean that there are no hidden injustices
 
----
+#### Why aren't people looking for secrets?
+
+According to Kaczynski, in order to be happy, individuals need to have goals whose attainment needs some effort. Human goals can be categorized into three types
+
+- Goals that can be satisfied with minimal efforts
+- Goals that can be satisfied with serious efforts
+- Goals that cannot be satisfied, no matter how much effort one makes
+
+Modern people are depressed because they think that there are no more hard problems to solve, only easy and impossible, which are highly unsatisfying to pursue. What you can do, even a child can do; what you can't do, even Einstein couldn't have done
+
+Look where no else is → things that not been standardized yet
+
+Tell secrets to whoever you need to & no more. The golden mean between nobody and everyone is a company
+
+If your goal is to never make mistakes in your life, you shouldn't look for secrets
+
+If you don't believe in something, you won't search for it. Belief in secrets is an effective truth
+
+### Setting the Foundations
+
+💡 **Thiel's Law:** A startup messed at the foundations cannot be fixed
+
+A startup needs good people that can get along, but also a structure so that people aligned in the longer term. The basic distribution is,
+
+- **Ownership:** Those who legally own equity
+- **Possession:** Those who run the company on a day-to-day basis
+- **Control:** Those who formally govern the company affairs
+
+If CEO earns stock at shareholder value, then their thinking shifts to short-term from long-term
+
+A board of 3 is the ideal size, maximum size should be 5. The average for public companies is 9
+
+Not providing stock options or regular salary leads to misalignment of goals in the long term
+
+Company performance increases as CEO salary decreases
+
+High cash compensation leads to people tending to claim value as it is and not investing time into new future value
+
+Equity ownership should be kept hidden as achieving fairness in the same is impossible
+
+The team needs to be able to envision a long-term future together, hence, durable relationships at work are extremely crucial
+
+People wish to join a team if the mission is compelling and vice versa
+
+From the outside, everyone should be different in the same way
+
+Startup uniform: Tribe of like-minded people
+
+Inside, everyone must be sharply distinguished by their work
+
+Startups are slightly less extreme compared to cults. Cults are fanatically wrong most of the time, startups are fanatically correct
+
+### The Underrated Need for Sales
+
+Obvious sales pitches seem easy to resist, so we entertain a false confidence in independence of mind. Advertising doesn't make you buy something right away, it embeds subtle impressions that drive sales later
+
+Great sales are hidden in plain sight
+
+Sales distinguish stars from "also-rans"
+
+> Superior sales and distribution can create a monopoly even without product differentiation, but the converse is not true
+
+The Lifetime Value (LTV) of a customer > average Cost of Acquiring Customers (CAC)
+
+Ideal viral loops are as quick and frictionless as possible, like funny YouTube videos or memes
+
+Just one working distribution channel can make a company a great business
+
+You need to not just sell products, but also to the investors, employees, and media
+
+### Will Technology Replace Us?
+
+New technology helps us get the efficiency gains of working with, say a hyperspecialized trading partner, w/o having to compete with it for resources for survival (except minimal electricity). Thus, technology is one way to escape competition in a globalized world
+
+> "Big data is usually dumb data. Computers can crunch numbers, but they don't know how to compare data from different sources or interpret complex behavior. Actionable insights can come from human analysts only"
 
 ### 7 Questions Every Business Must Answer
 
-1. **Engineering** — Can you create breakthrough technology, not just incremental improvements?
-2. **Timing** — Is now the right time?
-3. **Monopoly** — Are you starting with a big share of a small market?
-4. **People** — Do you have the right team?
-5. **Distribution** — Can you deliver the product?
-6. **Durability** — Will your market position be defensible in 10–20 years?
-7. **Secret** — Have you identified a unique opportunity others don't see?
+**Engineering Question:** Can you create breakthrough technology and not just incremental improvements?
 
-> The challenge is to always start by thinking small.
+**Timing Question:** Is now the right time?
+
+**Monopoly Question:** Are you starting with a big share of a small market?
+
+**People Question:** Do you have the right team?
+
+**Distribution Question:** Can you deliver your product?
+
+**Durability Question:** Will your market position be defendable 10 or 20 years into the future?
+
+**Secret Question:** Identified unique opportunity that no one else sees?
+
+Doing something different is what's truly good for society as it allows a business to profit by monopolizing a new market. Best problems are the ones that no one else is trying to solve. And the challenge is to always start by thinking small.
