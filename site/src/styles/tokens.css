@@ -14,6 +14,7 @@
 
   /* Type */
   --serif: "Instrument Serif", "Cormorant Garamond", Georgia, serif;
+  --reading: "Source Serif 4", "Source Serif Pro", Charter, "Iowan Old Style", Georgia, serif;
   --mono: "Inconsolata", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
   /* Scale */
