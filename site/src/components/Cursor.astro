@@ -1,0 +1,129 @@
+---
+---
+<div id="cursor" aria-hidden="true">
+  <span class="ring"></span>
+  <span class="dot"></span>
+</div>
+
+<style is:global>
+  /* Only engage on devices with a real pointer */
+  @media (hover: hover) and (pointer: fine) {
+    html.has-cursor,
+    html.has-cursor body,
+    html.has-cursor *,
+    html.has-cursor *::before,
+    html.has-cursor *::after { cursor: none !important; }
+  }
+
+  #cursor {
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: multiply;
+    display: none;
+  }
+  [data-theme="night"] #cursor { mix-blend-mode: screen; }
+  html.has-cursor #cursor { display: block; }
+
+  .ring, .dot {
+    position: absolute;
+    top: 0; left: 0;
+    border-radius: 50%;
+    will-change: transform;
+  }
+  .ring {
+    width: 28px;
+    height: 28px;
+    margin: -14px 0 0 -14px;
+    border: 1px solid var(--signal);
+    transition: width 200ms var(--easing),
+                height 200ms var(--easing),
+                margin 200ms var(--easing),
+                background-color 200ms var(--easing),
+                border-color 200ms var(--easing),
+                opacity 200ms var(--easing);
+  }
+  .dot {
+    width: 4px;
+    height: 4px;
+    margin: -2px 0 0 -2px;
+    background: var(--signal);
+  }
+
+  /* Hover state — over any interactive element */
+  html.cursor-hover .ring {
+    width: 42px;
+    height: 42px;
+    margin: -21px 0 0 -21px;
+    background: color-mix(in oklab, var(--signal) 12%, transparent);
+    border-color: var(--signal);
+  }
+  html.cursor-hover .dot {
+    opacity: 0;
+  }
+
+  /* Active state — mousedown */
+  html.cursor-down .ring {
+    width: 22px;
+    height: 22px;
+    margin: -11px 0 0 -11px;
+  }
+
+  /* Out-of-window state */
+  html.cursor-out #cursor { opacity: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ring { transition: none; }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    const root = document.documentElement;
+    const cursor = document.getElementById("cursor");
+    if (!cursor) return;
+    const ring = cursor.querySelector(".ring");
+    const dot = cursor.querySelector(".dot");
+
+    root.classList.add("has-cursor");
+
+    let mx = window.innerWidth / 2;
+    let my = window.innerHeight / 2;
+    let rx = mx, ry = my;
+    let raf = 0;
+
+    const interactiveSel = "a, button, [role='button'], input, textarea, select, summary, label, [data-cursor='hover']";
+
+    const onMove = (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      // dot tracks instantly
+      dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
+      // hover detection
+      const t = e.target instanceof Element ? e.target : null;
+      const isInter = !!(t && t.closest && t.closest(interactiveSel));
+      root.classList.toggle("cursor-hover", isInter);
+    };
+
+    const tick = () => {
+      // Lerp the ring toward the mouse — gives it a slight, gentle lag
+      rx += (mx - rx) * 0.22;
+      ry += (my - ry) * 0.22;
+      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+      raf = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("pointerdown", () => root.classList.add("cursor-down"));
+    window.addEventListener("pointerup", () => root.classList.remove("cursor-down"));
+    window.addEventListener("pointerleave", () => root.classList.add("cursor-out"));
+    window.addEventListener("pointerenter", () => root.classList.remove("cursor-out"));
+    document.addEventListener("mouseleave", () => root.classList.add("cursor-out"));
+    document.addEventListener("mouseenter", () => root.classList.remove("cursor-out"));
+
+    raf = requestAnimationFrame(tick);
+  })();
+</script>

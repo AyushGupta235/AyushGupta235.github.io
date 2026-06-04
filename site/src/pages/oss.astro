@@ -1,0 +1,85 @@
+---
+import Base from "../layouts/Base.astro";
+import MarginRail from "../components/MarginRail.astro";
+import { getCollection } from "astro:content";
+
+const items = (await getCollection("oss")).sort((a, b) => +b.data.filed - +a.data.filed);
+const fmt = (d: Date) => d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit" });
+
+const sigil: Record<string, string> = {
+  pr: "✓", issue: "?", maintainer: "◉", review: "▸",
+};
+const statusColor: Record<string, string> = {
+  merged: "var(--signal)",
+  ongoing: "var(--signal)",
+  open: "var(--link)",
+  closed: "var(--muted)",
+};
+---
+<Base title="OSS — Ayush Gupta" description="Open-source contributions ledger.">
+  <div class="page">
+    <MarginRail section="03 / OSS" filed={fmt(new Date())} marks={[
+      { label: "Entries", value: String(items.length) },
+      { sigil: "◉", value: "Maintainer" },
+      { sigil: "✓", value: "PR" },
+      { sigil: "?", value: "Issue" },
+    ]} />
+    <div class="main">
+      <header class="head">
+        <p class="kicker">FIELD JOURNAL · 03</p>
+        <h1>Open Source</h1>
+        <p class="lede">
+          A ledger of contributions, repos I maintain, and issues I've poked at.
+          Newest first. Hand-maintained for now; automation comes later.
+        </p>
+      </header>
+
+      {items.length === 0 ? (
+        <p class="muted">No entries yet — first one going up shortly.</p>
+      ) : (
+        <ul class="ledger">
+          {items.map((item) => (
+            <li>
+              <div class="row1">
+                <span class="left">
+                  <span class="sigil" style={`color:${statusColor[item.data.status] ?? "var(--ink)"}`}>{sigil[item.data.kind] ?? "·"}</span>
+                  <a class="title" href={item.data.url} rel="noopener">{item.data.title}</a>
+                </span>
+                <span class="meta">
+                  <span class="repo">{item.data.repo}</span>
+                  <span class="sep">·</span>
+                  <span class="kind">{item.data.kind}</span>
+                  <span class="sep">·</span>
+                  <span class="status" data-status={item.data.status}>{item.data.status}</span>
+                  <span class="sep">·</span>
+                  <span class="date">{fmt(item.data.filed)}</span>
+                </span>
+              </div>
+              <p class="note">{item.data.note}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .head { margin-bottom: var(--s-7); }
+  .kicker { font-family: var(--mono); color: var(--muted); font-size: var(--fs-marginalia); letter-spacing: 0.22em; text-transform: uppercase; margin: 0 0 var(--s-3); }
+  .head h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin: 0 0 var(--s-3); }
+  .lede { color: var(--ink-soft); max-width: 56ch; margin: 0; }
+
+  .ledger { list-style: none; padding: 0; margin: 0; }
+  .ledger li { padding: var(--s-4) 0; border-bottom: 1px solid var(--rule-soft); }
+  .row1 { display: flex; justify-content: space-between; gap: var(--s-4); align-items: baseline; flex-wrap: wrap; }
+  .left { display: inline-flex; gap: 0.6em; align-items: baseline; }
+  .sigil { font-family: var(--mono); }
+  .title { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); border-bottom: 0; }
+  .title:hover { color: var(--signal); }
+  .meta { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); display: inline-flex; gap: 0.4em; flex-wrap: wrap; }
+  .sep { opacity: 0.4; }
+  .status[data-status="merged"], .status[data-status="ongoing"] { color: var(--signal); }
+  .status[data-status="open"] { color: var(--link); }
+  .note { color: var(--ink-soft); margin: var(--s-2) 0 0; max-width: 70ch; }
+</style>

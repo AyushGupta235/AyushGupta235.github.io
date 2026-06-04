@@ -1,0 +1,18 @@
+---
+type Mark = { label?: string; value: string; sigil?: string };
+interface Props { marks?: Mark[]; section?: string; filed?: string }
+const { marks = [], section, filed } = Astro.props;
+const all: Mark[] = [];
+if (section) all.push({ label: "Section", value: section });
+if (filed) all.push({ label: "Filed", value: filed });
+all.push(...marks);
+---
+<aside class="rail" aria-label="Margin notes">
+  {all.map((m) => (
+    <span class="mark">
+      {m.sigil && <span class="sigil">{m.sigil}</span>}
+      {m.label && <span class="label">{m.label}</span>}
+      <span>{m.value}</span>
+    </span>
+  ))}
+</aside>

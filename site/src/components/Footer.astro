@@ -1,0 +1,45 @@
+---
+const year = new Date().getFullYear();
+---
+<footer>
+  <div class="row">
+    <span>© {year} Ayush Gupta</span>
+    <span class="sep">·</span>
+    <a href="mailto:ayush1000gupta@gmail.com">ayush1000gupta@gmail.com</a>
+    <span class="sep">·</span>
+    <a href="https://github.com/AyushGupta235" rel="me noopener">GitHub</a>
+    <span class="sep">·</span>
+    <a href="/rss.xml">RSS</a>
+  </div>
+  <div class="hint"><kbd>⌘</kbd> <kbd>K</kbd> to navigate</div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--rule-soft);
+    margin-top: var(--s-9);
+    padding: var(--s-5);
+    max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--s-4);
+    align-items: center;
+    color: var(--muted);
+    font-size: var(--fs-small);
+    flex-wrap: wrap;
+  }
+  .sep { opacity: 0.4; }
+  a { color: var(--ink-soft); }
+  kbd {
+    display: inline-block;
+    border: 1px solid var(--rule);
+    border-bottom-width: 2px;
+    border-radius: 3px;
+    padding: 0 0.35em;
+    font-size: 0.8em;
+    background: var(--bg-soft);
+    color: var(--ink-soft);
+  }
+</style>

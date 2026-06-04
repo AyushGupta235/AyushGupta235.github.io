@@ -1,0 +1,60 @@
+---
+import "../styles/globals.css";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import BootLine from "../components/BootLine.astro";
+import CmdK from "../components/CmdK.astro";
+import Cursor from "../components/Cursor.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+const {
+  title = "Ayush Gupta — field journal",
+  description = "ML engineer working on agentic AI systems. Notes, projects, OSS.",
+  ogImage,
+} = Astro.props;
+const siteUrl = Astro.site?.toString() ?? "";
+const canonical = new URL(Astro.url.pathname, siteUrl || "https://ayushgupta.github.io").toString();
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="alternate" type="application/rss+xml" title="Ayush Gupta — Notes" href="/rss.xml" />
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem("theme");
+          const sys = matchMedia("(prefers-color-scheme: dark)").matches ? "night" : "day";
+          document.documentElement.setAttribute("data-theme", stored || sys);
+        } catch { document.documentElement.setAttribute("data-theme", "day"); }
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="sr-only" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main"><slot /></main>
+    <Footer />
+    <ThemeToggle />
+    <CmdK />
+    <BootLine />
+    <Cursor />
+  </body>
+</html>

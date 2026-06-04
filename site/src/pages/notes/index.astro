@@ -1,0 +1,106 @@
+---
+import Base from "../../layouts/Base.astro";
+import MarginRail from "../../components/MarginRail.astro";
+import { getCollection } from "astro:content";
+
+const all = (await getCollection("posts"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => +b.data.date - +a.data.date);
+
+const kinds = [
+  { id: "all", label: "All" },
+  { id: "essay", label: "Essays" },
+  { id: "book-note", label: "Book notes" },
+  { id: "research-note", label: "Research notes" },
+];
+
+const fmt = (d: Date) => d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit" });
+---
+<Base title="Notes — Ayush Gupta" description="Essays, book notes, and research notes.">
+  <div class="page">
+    <MarginRail section="04 / Notes" filed={fmt(new Date())} marks={[
+      { label: "Entries", value: String(all.length) },
+    ]} />
+    <div class="main">
+      <header class="head">
+        <p class="kicker">FIELD JOURNAL · 04</p>
+        <h1>Notes</h1>
+        <p class="lede">Essays I've published, books I've taken notes on, and the occasional half-thought worth keeping.</p>
+      </header>
+
+      <div class="filters" role="tablist" aria-label="Filter by kind">
+        {kinds.map((k) => (
+          <button class="chip" data-filter={k.id} type="button">{k.label}</button>
+        ))}
+      </div>
+
+      <ul class="list">
+        {all.map((p) => (
+          <li data-kind={p.data.kind}>
+            <a href={`/notes/${p.id}/`} class="row">
+              <div>
+                <p class="row-kind">{p.data.kind.replace("-", " ")}</p>
+                <h2 class="row-title">{p.data.title}</h2>
+                {p.data.subtitle && <p class="row-sub">{p.data.subtitle}</p>}
+              </div>
+              <span class="row-date">{fmt(p.data.date)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .head { margin-bottom: var(--s-6); }
+  .kicker { font-family: var(--mono); color: var(--muted); font-size: var(--fs-marginalia); letter-spacing: 0.22em; text-transform: uppercase; margin: 0 0 var(--s-3); }
+  .head h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin: 0 0 var(--s-3); }
+  .lede { color: var(--ink-soft); max-width: 56ch; margin: 0; }
+
+  .filters { display: flex; gap: 0.3em; flex-wrap: wrap; margin-bottom: var(--s-5); }
+  .chip { background: none; cursor: pointer; }
+  .chip.is-active { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+
+  .list { list-style: none; padding: 0; margin: 0; }
+  .list li { border-bottom: 1px solid var(--rule-soft); }
+  .list li[hidden] { display: none; }
+  .row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--s-4);
+    align-items: baseline;
+    padding: var(--s-4) 0;
+    color: var(--ink);
+    border-bottom: 0;
+  }
+  .row-kind {
+    font-family: var(--mono); font-size: 0.7rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--signal); margin: 0 0 0.3em;
+  }
+  .row-title { font-family: var(--serif); font-size: 1.6rem; line-height: 1.1; margin: 0; letter-spacing: -0.01em; }
+  .row:hover .row-title { color: var(--signal); }
+  .row-sub { color: var(--ink-soft); margin: 0.3em 0 0; font-size: 0.95rem; }
+  .row-date { font-family: var(--mono); color: var(--muted); font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; }
+  @media (max-width: 540px) {
+    .row { grid-template-columns: 1fr; }
+    .row-date { padding-top: 0.4em; }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const chips = document.querySelectorAll(".chip[data-filter]");
+    const items = document.querySelectorAll(".list li[data-kind]");
+    const apply = (f) => {
+      chips.forEach((c) => c.classList.toggle("is-active", c.getAttribute("data-filter") === f));
+      items.forEach((li) => {
+        const k = li.getAttribute("data-kind");
+        li.hidden = !(f === "all" || k === f);
+      });
+    };
+    chips.forEach((c) => c.addEventListener("click", () => apply(c.getAttribute("data-filter"))));
+    apply("all");
+  })();
+</script>

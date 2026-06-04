@@ -1,37 +1,30 @@
-# Parchment
-A clean, single column blog template built for jekyll
+# ayushgupta.github.io
 
-## Building Locally
-* Clone the repository
-* Run `bundle install`
-* Run `bundle exec jekyll serve`
-* Visit browser at `http://127.0.0.1:4000/parchment/`
+Personal site — `ayushgupta.github.io`. Built with **Astro + MDX**, deployed to GitHub Pages via GitHub Actions. See [`CLAUDE.md`](./CLAUDE.md) for the full project guide.
 
-## Usage
+## Run locally
 
-* To use this as your GitHub Page, fork this repository, and
-  rename it to `<username>.github.io`. Your site will be live
-  at `https://<username>.github.io/parchment-jekyll`.
+```bash
+cd site
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # production build → site/dist
+```
 
-* You can customise variables in `_config.yml` and `css/*` files.
+## Deploy
 
-* You can add markdown files, say `foo.md` in the root directory
-  of the repository. It will then be accessible like
-  `your.website.com/foo`.
+`git push` to `main` triggers `.github/workflows/deploy.yml` (Astro build + GitHub Pages deploy). Pages source must be set to **GitHub Actions** in repo settings.
 
-* To add posts, add your posts in the `_posts` directory. Follow
-  the naming convention `%yyyy-%mm-%dd-your-title-here.md`.
+## Layout
 
-* To add a profile picture, use class `profile-picture` around
-  the image.
-
-## Contributing
-Pull requests are welcome. For major changes, please open an
-issue first to discuss what you would like to change.
-
-## Credits
-Parchment is inspired from the resume theme
-[Researcher](https://github.com/ankitsultana/researcher)
-
-## License
-[GNU GPL v3](LICENSE)
+```
+site/                 the Astro project
+├── src/
+│   ├── pages/        routes
+│   ├── content/      posts, projects, oss (content collections)
+│   ├── components/   Nav, MarginRail, FiledReport, CmdK, Cursor, …
+│   ├── layouts/      Base.astro
+│   ├── styles/       tokens.css, globals.css
+│   └── data/         status.yaml
+└── public/
+```

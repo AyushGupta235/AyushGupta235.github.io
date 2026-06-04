@@ -1,0 +1,71 @@
+:root {
+  /* Day (default) — bone paper, ink, signal red */
+  --bg: #ECE6D6;
+  --bg-soft: #E4DCC6;
+  --ink: #1A1714;
+  --ink-soft: #3A352F;
+  --muted: #6B6258;
+  --rule: rgba(26, 23, 20, 0.16);
+  --rule-soft: rgba(26, 23, 20, 0.08);
+  --signal: #C8201C;
+  --signal-soft: #E0796D;
+  --link: #2E4A8C;
+  --selection: rgba(200, 32, 28, 0.20);
+
+  /* Type */
+  --serif: "Instrument Serif", "Cormorant Garamond", Georgia, serif;
+  --mono: "Inconsolata", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Scale */
+  --fs-display: clamp(2.6rem, 6vw, 4.6rem);
+  --fs-h1: clamp(2rem, 4.5vw, 3.2rem);
+  --fs-h2: clamp(1.5rem, 3vw, 2.1rem);
+  --fs-h3: 1.25rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-marginalia: 0.75rem;
+
+  /* Spacing */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 5rem;
+  --s-9: 8rem;
+
+  /* Layout */
+  --content-max: 720px;
+  --rail-w: 96px;
+  --gutter: 32px;
+
+  /* Motion */
+  --easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 140ms;
+  --t-mid: 240ms;
+  --t-slow: 420ms;
+}
+
+[data-theme="night"] {
+  --bg: #0F1012;
+  --bg-soft: #16181B;
+  --ink: #ECE6D6;
+  --ink-soft: #C7C0AE;
+  --muted: #8A8278;
+  --rule: rgba(236, 230, 214, 0.18);
+  --rule-soft: rgba(236, 230, 214, 0.08);
+  --signal: #E0796D;
+  --signal-soft: #C8201C;
+  --link: #9BB6E4;
+  --selection: rgba(224, 121, 109, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,83 @@
+---
+import Base from "../layouts/Base.astro";
+import MarginRail from "../components/MarginRail.astro";
+import FiledReport from "../components/FiledReport.astro";
+import { getCollection, render } from "astro:content";
+
+const all = await getCollection("projects");
+all.sort((a, b) => a.data.order - b.data.order || +b.data.filed - +a.data.filed);
+
+const groups = [
+  { id: "research", label: "Research", desc: "Papers, theses, and exploratory work." },
+  { id: "applied", label: "Applied ML", desc: "Production-shaped tools and demos." },
+  { id: "workbench", label: "Workbench", desc: "From-scratch builds for learning." },
+];
+
+const rendered = new Map<string, any>();
+for (const p of all) {
+  const { Content } = await render(p);
+  rendered.set(p.id, Content);
+}
+
+let idx = 0;
+const fmt = (d: Date) => d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit" });
+---
+<Base title="Projects — Ayush Gupta" description="Research, applied ML, and from-scratch builds — with repos.">
+  <div class="page">
+    <MarginRail section="07 / Projects" filed={fmt(new Date())} marks={[
+      { label: "Total", value: String(all.length) },
+      { sigil: "◇", value: "Research" },
+      { sigil: "▣", value: "Applied" },
+      { sigil: "·", value: "Workbench" },
+    ]} />
+    <div class="main">
+      <header class="head">
+        <p class="kicker">FIELD JOURNAL · 07</p>
+        <h1>Projects</h1>
+        <p class="lede">A working catalogue of things I've built or am building — grouped by what they were trying to learn or ship. Click any report to expand.</p>
+      </header>
+
+      {groups.map((g) => {
+        const items = all.filter((p) => p.data.category === g.id);
+        if (items.length === 0) return null;
+        return (
+          <section class="group">
+            <header class="group-head">
+              <h2 class="group-title">{g.label}</h2>
+              <p class="group-desc">{g.desc}</p>
+            </header>
+            {items.map((p) => {
+              idx += 1;
+              const Content = rendered.get(p.id);
+              return (
+                <FiledReport
+                  title={p.data.title}
+                  filed={p.data.filed}
+                  category={p.data.category}
+                  outcome={p.data.outcome}
+                  stack={p.data.stack}
+                  repo={p.data.repo}
+                  demo={p.data.demo}
+                  index={idx}
+                >
+                  <Content />
+                </FiledReport>
+              );
+            })}
+          </section>
+        );
+      })}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .head { margin-bottom: var(--s-7); }
+  .kicker { font-family: var(--mono); color: var(--muted); font-size: var(--fs-marginalia); letter-spacing: 0.22em; text-transform: uppercase; margin: 0 0 var(--s-3); }
+  .head h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin: 0 0 var(--s-3); }
+  .lede { color: var(--ink-soft); max-width: 56ch; margin: 0; }
+  .group { margin-bottom: var(--s-8); }
+  .group-head { margin-bottom: var(--s-4); padding-bottom: var(--s-2); border-bottom: 1px solid var(--rule); }
+  .group-title { font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--signal); font-weight: 700; }
+  .group-desc { color: var(--muted); margin: var(--s-2) 0 0; font-size: 0.9rem; }
+</style>

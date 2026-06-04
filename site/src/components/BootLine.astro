@@ -1,0 +1,79 @@
+---
+---
+<div id="boot" aria-hidden="true">
+  <pre class="boot-pre"></pre>
+</div>
+
+<style>
+  #boot {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 50;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    transition: opacity var(--t-slow) var(--easing);
+  }
+  #boot.is-done { opacity: 0; }
+  .boot-pre {
+    font-family: var(--mono);
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    margin: 0;
+    text-align: left;
+    min-width: 260px;
+    white-space: pre;
+  }
+  :global([data-bootline=":"]) { color: var(--signal); }
+</style>
+
+<script is:inline>
+  (() => {
+    try {
+      if (sessionStorage.getItem("booted") === "1") {
+        const el = document.getElementById("boot");
+        if (el) el.remove();
+        return;
+      }
+    } catch {}
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const el = document.getElementById("boot");
+      if (el) el.remove();
+      try { sessionStorage.setItem("booted", "1"); } catch {}
+      return;
+    }
+    const lines = [
+      "ayushgupta.field — init",
+      "mount fonts.................. ok",
+      "load index................... ok",
+      "ready.",
+    ];
+    const pre = document.querySelector(".boot-pre");
+    const root = document.getElementById("boot");
+    if (!pre || !root) return;
+    let li = 0, ci = 0, buf = "";
+    const tick = () => {
+      if (li >= lines.length) {
+        setTimeout(() => {
+          root.classList.add("is-done");
+          setTimeout(() => root.remove(), 500);
+          try { sessionStorage.setItem("booted", "1"); } catch {}
+        }, 240);
+        return;
+      }
+      const line = lines[li];
+      if (ci < line.length) {
+        buf += line[ci++];
+        pre.textContent = buf;
+        setTimeout(tick, 14 + Math.random() * 18);
+      } else {
+        buf += "\n";
+        ci = 0; li++;
+        setTimeout(tick, 80);
+      }
+    };
+    tick();
+  })();
+</script>
