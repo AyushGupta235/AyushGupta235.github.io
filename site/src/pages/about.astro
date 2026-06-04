@@ -1,0 +1,137 @@
+---
+import Base from "../layouts/Base.astro";
+import MarginRail from "../components/MarginRail.astro";
+import status from "../data/status.yaml";
+
+const fmt = (d: Date) => d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit" });
+---
+<Base title="About — Ayush Gupta" description="ML engineer working on agentic AI systems.">
+  <div class="page">
+    <MarginRail section="05 / About" filed={fmt(new Date())} marks={[
+      { label: "Location", value: status.location },
+      { label: "Role", value: "ML Engineer" },
+      { label: "Listening", value: status.listening },
+    ]} />
+    <div class="main">
+      <header class="head">
+        <p class="kicker">FIELD JOURNAL · 05</p>
+        <h1>About</h1>
+      </header>
+
+      <div class="two-col">
+        <div class="bio">
+          <p class="lede">
+            I'm a Machine Learning Engineer working on <em>agentic AI systems</em>
+            — building production-grade applications of LLMs that go beyond
+            demos into real-world workflows. My work sits at the intersection of
+            applied ML, system design, and product thinking.
+          </p>
+          <p>
+            I'm particularly drawn to the messy, interesting problems of
+            deployment: how you orchestrate multiple components, manage latency
+            and reliability trade-offs, and make AI actually useful at scale.
+            Over the next few years, I want to deepen my technical expertise in
+            ML before eventually moving closer to the product side of
+            technology.
+          </p>
+          <p>
+            I graduated from <strong>IIT (BHU) Varanasi</strong> with a BTech
+            and MTech in Mathematics. Before my current role, I interned across
+            ML research (CWNU, South Korea), consulting (EY-Parthenon), product
+            strategy, venture capital, and a prior AI startup — which gave me
+            an unusually wide lens on how technology and business intersect.
+          </p>
+        </div>
+
+        <aside class="card">
+          <h3 class="card-title">Field card</h3>
+          <dl>
+            <dt>Role</dt><dd>ML Engineer</dd>
+            <dt>Focus</dt><dd>Agentic AI · Deployment · Eval</dd>
+            <dt>Location</dt><dd>{status.location}</dd>
+            <dt>Currently</dt><dd>{status.currently}</dd>
+            <dt>Reading</dt><dd>{status.reading}</dd>
+            <dt>Listening</dt><dd>{status.listening}</dd>
+          </dl>
+          <div class="contact">
+            <a href="mailto:ayush1000gupta@gmail.com">Email</a>
+            <span class="sep">·</span>
+            <a href="https://github.com/AyushGupta235" rel="me noopener">GitHub</a>
+          </div>
+        </aside>
+      </div>
+
+      <section class="interests">
+        <h2>Slow rituals</h2>
+        <dl class="interests-list">
+          <div>
+            <dt>Fitness</dt>
+            <dd>Three years in, still learning. Less about aesthetics, more about the discipline of showing up.</dd>
+          </div>
+          <div>
+            <dt>Reading</dt>
+            <dd>ML research papers, business books, occasional fiction. Some show up on the notes page.</dd>
+          </div>
+          <div>
+            <dt>Coffee</dt>
+            <dd>Take it seriously, not insufferably. A good slow ritual in a fast week.</dd>
+          </div>
+          <div>
+            <dt>Podcasts</dt>
+            <dd>Long-form conversations where the host has done the homework.</dd>
+          </div>
+        </dl>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .head { margin-bottom: var(--s-6); }
+  .kicker { font-family: var(--mono); color: var(--muted); font-size: var(--fs-marginalia); letter-spacing: 0.22em; text-transform: uppercase; margin: 0 0 var(--s-3); }
+  .head h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin: 0; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: var(--s-6);
+    margin-bottom: var(--s-8);
+  }
+  @media (max-width: 760px) { .two-col { grid-template-columns: 1fr; } }
+
+  .bio { font-size: 1.02rem; line-height: 1.65; }
+  .lede { font-family: var(--serif); font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--ink); margin-bottom: var(--s-5); }
+  .lede em { color: var(--signal); }
+
+  .card {
+    border: 1px solid var(--rule);
+    padding: var(--s-4);
+    background: var(--bg-soft);
+    border-radius: 2px;
+    align-self: start;
+    position: sticky;
+    top: var(--s-5);
+  }
+  .card-title {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--signal);
+    margin: 0 0 var(--s-3);
+    font-weight: 700;
+  }
+  dl { margin: 0; }
+  .card dl { display: grid; grid-template-columns: auto 1fr; gap: 0.4em var(--s-3); font-family: var(--mono); font-size: 0.82rem; }
+  .card dt { color: var(--muted); }
+  .card dd { margin: 0; color: var(--ink); }
+  .contact { margin-top: var(--s-4); padding-top: var(--s-3); border-top: 1px solid var(--rule-soft); font-family: var(--mono); font-size: 0.85rem; }
+  .sep { opacity: 0.4; }
+
+  .interests h2 { font-family: var(--serif); font-size: 1.8rem; margin: 0 0 var(--s-4); }
+  .interests-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-4) var(--s-5); }
+  .interests-list > div { padding-left: var(--s-3); border-left: 1px solid var(--rule); }
+  .interests-list dt { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--signal); margin-bottom: 0.3em; }
+  .interests-list dd { margin: 0; color: var(--ink-soft); }
+  @media (max-width: 560px) { .interests-list { grid-template-columns: 1fr; } }
+</style>

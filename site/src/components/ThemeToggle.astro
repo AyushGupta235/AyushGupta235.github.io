@@ -1,0 +1,45 @@
+---
+---
+<button id="theme-toggle" type="button" aria-label="Toggle theme">
+  <span class="i-day" aria-hidden="true">☀</span>
+  <span class="i-night" aria-hidden="true">☾</span>
+</button>
+
+<style>
+  #theme-toggle {
+    position: fixed;
+    bottom: var(--s-5);
+    right: var(--s-5);
+    z-index: 30;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 1rem;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: transform var(--t-fast) var(--easing), background var(--t-fast) var(--easing);
+  }
+  #theme-toggle:hover { transform: scale(1.08); }
+  #theme-toggle:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+  .i-day, .i-night { grid-area: 1 / 1; transition: opacity var(--t-mid) var(--easing), transform var(--t-mid) var(--easing); }
+  :root:not([data-theme="night"]) .i-night { opacity: 0; transform: rotate(40deg); }
+  [data-theme="night"] .i-day { opacity: 0; transform: rotate(-40deg); }
+</style>
+
+<script is:inline>
+  (() => {
+    const btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      const cur = document.documentElement.getAttribute("data-theme") === "night" ? "night" : "day";
+      const next = cur === "night" ? "day" : "night";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch {}
+    });
+  })();
+</script>

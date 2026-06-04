@@ -1,0 +1,104 @@
+---
+interface Props {
+  title: string;
+  filed: Date;
+  category: string;
+  outcome: string;
+  stack: string[];
+  repo?: string;
+  demo?: string;
+  index: number;
+}
+const { title, filed, category, outcome, stack, repo, demo, index } = Astro.props;
+const sigil = (
+  { research: "◇", applied: "▣", workbench: "·" } as Record<string, string>
+)[category] ?? "▸";
+const num = String(index).padStart(2, "0");
+const filedStr = filed.toLocaleDateString("en-US", { year: "numeric", month: "short" });
+---
+<details class="report">
+  <summary>
+    <span class="meta">
+      <span class="num">[{num}]</span>
+      <span class="sigil">{sigil}</span>
+      <span class="cat">{category}</span>
+      <span class="filed">filed {filedStr}</span>
+    </span>
+    <span class="title">{title}</span>
+    <span class="outcome">{outcome}</span>
+    <span class="open-hint" aria-hidden="true"></span>
+  </summary>
+  <div class="body">
+    <div class="prose"><slot /></div>
+    <ul class="stack">
+      {stack.map((s) => <li>{s}</li>)}
+    </ul>
+    <div class="links">
+      {repo && <a href={repo} rel="noopener">repo →</a>}
+      {demo && <a href={demo} rel="noopener">live demo →</a>}
+    </div>
+  </div>
+</details>
+
+<style>
+  .report { border-bottom: 1px solid var(--rule-soft); padding: var(--s-5) 0; }
+  .report[open] { padding-bottom: var(--s-6); }
+  summary { list-style: none; cursor: pointer; display: grid; gap: var(--s-2); position: relative; }
+  summary::-webkit-details-marker { display: none; }
+  summary::marker { display: none; }
+  .meta {
+    font-family: var(--mono);
+    font-size: var(--fs-marginalia);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    gap: var(--s-3);
+    flex-wrap: wrap;
+  }
+  .num { color: var(--ink-soft); }
+  .sigil { color: var(--signal); }
+  .title {
+    display: block;
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  summary:hover .title { color: var(--signal); }
+  .outcome { display: block; color: var(--ink-soft); max-width: 62ch; }
+  .open-hint {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .report[open] .open-hint::before { content: "− collapse"; color: var(--signal); }
+  .report:not([open]) .open-hint::before { content: "+ expand"; color: var(--signal); }
+
+  .body {
+    margin-top: var(--s-4);
+    padding-left: var(--s-4);
+    border-left: 1px solid var(--rule);
+    animation: reveal var(--t-mid) var(--easing);
+  }
+  @keyframes reveal { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  .prose :global(p) { color: var(--ink-soft); margin: 0 0 var(--s-3); max-width: 64ch; }
+  .stack { list-style: none; padding: 0; margin: var(--s-3) 0; display: flex; flex-wrap: wrap; gap: 0.3em; }
+  .stack li {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--rule);
+    padding: 0.15em 0.5em;
+    border-radius: 2px;
+  }
+  .links { display: flex; gap: var(--s-4); margin-top: var(--s-3); font-family: var(--mono); font-size: 0.85rem; }
+</style>

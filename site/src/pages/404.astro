@@ -1,0 +1,33 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="404 — Process not found">
+  <div class="wrap">
+    <p class="mono"><span class="signal">ERR</span> PROCESS_NOT_FOUND</p>
+    <h1>This page didn't make it through the build.</h1>
+    <p class="lede">
+      Either it was archived, renamed, or never existed. Pick a thread and follow it back.
+    </p>
+    <ul class="links">
+      <li><a href="/">→ Home</a></li>
+      <li><a href="/notes/">→ Notes</a></li>
+      <li><a href="/stack/">→ Stack</a></li>
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .wrap { max-width: 720px; margin: 0 auto; padding: var(--s-9) var(--s-5); }
+  .mono {
+    font-family: var(--mono);
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    margin: 0 0 var(--s-4);
+  }
+  .signal { color: var(--signal); }
+  h1 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); margin: 0 0 var(--s-4); line-height: 1.1; }
+  .lede { color: var(--ink-soft); max-width: 50ch; }
+  .links { list-style: none; padding: 0; margin: var(--s-5) 0 0; font-family: var(--mono); display: grid; gap: var(--s-2); }
+</style>

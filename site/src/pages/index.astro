@@ -1,0 +1,191 @@
+---
+import Base from "../layouts/Base.astro";
+import MarginRail from "../components/MarginRail.astro";
+import { getCollection } from "astro:content";
+import status from "../data/status.yaml";
+
+const posts = (await getCollection("posts"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => +b.data.date - +a.data.date)
+  .slice(0, 3);
+
+const projects = (await getCollection("projects"))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit" });
+---
+<Base>
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="kicker">FIELD JOURNAL · VOL. 01 · {fmt(new Date())}</p>
+      <h1 class="display">
+        Building <em>thinking systems</em>
+        <span class="break"></span>
+        that hold up <em>in production.</em>
+      </h1>
+      <p class="lede">
+        Machine-learning engineer working on agentic AI. Interested in the messy
+        edge where models meet real users — orchestration, drift, evaluation,
+        and the rest of the long tail.
+      </p>
+      <div class="hairline"></div>
+      <p class="status">
+        <span class="badge"><span class="dot"></span>CURRENTLY</span>
+        <span>building <strong>{status.currently}</strong></span>
+        <span class="sep">·</span>
+        <span>reading <strong>{status.reading}</strong></span>
+        <span class="sep">·</span>
+        <span>in <strong>{status.location}</strong></span>
+      </p>
+    </div>
+  </section>
+
+  <div class="page">
+    <MarginRail section="01 / Index" filed={fmt(new Date())} />
+    <div class="main">
+      <section class="strip">
+        <header class="strip-head">
+          <h3>Latest Notes</h3>
+          <a href="/notes/" class="more">All notes →</a>
+        </header>
+        <ul class="list">
+          {posts.map((p) => (
+            <li>
+              <a href={`/notes/${p.id}/`} class="row">
+                <span class="row-title">{p.data.title}</span>
+                <span class="row-meta">{fmt(p.data.date)}</span>
+              </a>
+              {p.data.subtitle && <p class="row-sub">{p.data.subtitle}</p>}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="strip">
+        <header class="strip-head">
+          <h3>Featured Projects</h3>
+          <a href="/projects/" class="more">All projects →</a>
+        </header>
+        <ul class="list">
+          {projects.map((p) => (
+            <li>
+              <a href={p.data.repo} class="row" rel="noopener">
+                <span class="row-title">{p.data.title}</span>
+                <span class="row-meta">{p.data.category}</span>
+              </a>
+              <p class="row-sub">{p.data.outcome}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="strip">
+        <header class="strip-head">
+          <h3>Lately</h3>
+          <a href="/now/" class="more">/now →</a>
+        </header>
+        <p class="muted">
+          What I'm shipping, reading, and chewing on this week — updated periodically.
+        </p>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .hero {
+    padding: var(--s-8) var(--s-5) var(--s-7);
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .hero-inner { max-width: 920px; }
+  .kicker {
+    font-family: var(--mono);
+    color: var(--muted);
+    font-size: var(--fs-marginalia);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin: 0 0 var(--s-5);
+  }
+  .display {
+    font-family: var(--serif);
+    font-size: var(--fs-display);
+    line-height: 0.98;
+    letter-spacing: -0.015em;
+    margin: 0 0 var(--s-5);
+    max-width: 16ch;
+  }
+  .display em { color: var(--signal); font-style: italic; }
+  .break { display: block; }
+  .lede {
+    max-width: 56ch;
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    margin: 0 0 var(--s-5);
+  }
+  .hairline {
+    height: 1px;
+    background: var(--rule);
+    margin: var(--s-5) 0;
+    max-width: 720px;
+  }
+  .status {
+    font-family: var(--mono);
+    font-size: 0.86rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    flex-wrap: wrap;
+  }
+  .status strong { color: var(--ink); font-weight: 500; }
+  .sep { opacity: 0.4; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    color: var(--signal);
+    letter-spacing: 0.15em;
+    font-size: 0.72rem;
+  }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--signal);
+    animation: pulse 2.2s var(--easing) infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.35 } }
+
+  .strip { margin-bottom: var(--s-7); }
+  .strip-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--s-4);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: var(--s-2);
+  }
+  .more { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); border-bottom: 0; }
+  .more:hover { color: var(--signal); }
+  .list { list-style: none; padding: 0; margin: 0; }
+  .list li { padding: var(--s-3) 0; border-bottom: 1px solid var(--rule-soft); }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--s-4);
+    color: var(--ink);
+    border-bottom: 0;
+  }
+  .row-title { font-family: var(--serif); font-size: 1.25rem; line-height: 1.2; }
+  .row-meta {
+    font-family: var(--mono);
+    color: var(--muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-top: 0.4em;
+  }
+  .row:hover .row-title { color: var(--signal); }
+  .row-sub { color: var(--ink-soft); margin: 0.3em 0 0; font-size: 0.95rem; }
+</style>

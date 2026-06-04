@@ -1,0 +1,103 @@
+---
+import Base from "../../layouts/Base.astro";
+import MarginRail from "../../components/MarginRail.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+
+const wordCount = (post.body ?? "").trim().split(/\s+/).length;
+const readingTime = Math.max(1, Math.round(wordCount / 220));
+const fmt = (d: Date) => d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit" });
+const kindLabel = post.data.kind.replace("-", " ");
+---
+<Base title={`${post.data.title} — Ayush Gupta`} description={post.data.description ?? post.data.subtitle}>
+  <div class="page">
+    <MarginRail
+      section={kindLabel.toUpperCase()}
+      filed={fmt(post.data.date)}
+      marks={[
+        { label: "Words", value: wordCount.toLocaleString() },
+        { label: "Read", value: `${readingTime} min` },
+        ...(post.data.tags?.length ? [{ label: "Tags", value: post.data.tags.join(", ") }] : []),
+      ]}
+    />
+    <article class="main note">
+      <header class="head">
+        <p class="kicker">{kindLabel} · {fmt(post.data.date)}</p>
+        <h1>{post.data.title}</h1>
+        {post.data.subtitle && <p class="subtitle">{post.data.subtitle}</p>}
+      </header>
+      <div class="prose">
+        <Content />
+      </div>
+      <footer class="back">
+        <a href="/notes/">← All notes</a>
+      </footer>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .note .head { margin-bottom: var(--s-6); }
+  .kicker {
+    font-family: var(--mono); color: var(--signal);
+    font-size: var(--fs-marginalia); letter-spacing: 0.18em;
+    text-transform: uppercase; margin: 0 0 var(--s-3);
+  }
+  .note h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    line-height: 1.05;
+    margin: 0 0 var(--s-3);
+    letter-spacing: -0.015em;
+  }
+  .subtitle {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .prose { font-size: 1rem; line-height: 1.65; }
+  .prose :global(p:first-of-type::first-letter) {
+    font-family: var(--serif);
+    font-size: 3.4em;
+    float: left;
+    line-height: 0.9;
+    padding: 0.06em 0.1em 0 0;
+    color: var(--signal);
+  }
+  .prose :global(h2) {
+    font-family: var(--serif);
+    font-size: 1.7rem;
+    margin: var(--s-7) 0 var(--s-3);
+    line-height: 1.15;
+  }
+  .prose :global(h3) {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    margin: var(--s-6) 0 var(--s-3);
+    line-height: 1.2;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .prose :global(p) { margin: 0 0 var(--s-4); }
+  .prose :global(ul), .prose :global(ol) { padding-left: 1.2em; }
+  .prose :global(li) { margin: var(--s-2) 0; }
+  .prose :global(hr) { margin: var(--s-6) 0; }
+  .back {
+    margin-top: var(--s-8);
+    padding-top: var(--s-4);
+    border-top: 1px solid var(--rule-soft);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+</style>

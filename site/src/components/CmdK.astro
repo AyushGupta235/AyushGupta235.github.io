@@ -1,0 +1,172 @@
+---
+import { getCollection } from "astro:content";
+const posts = await getCollection("posts");
+const projects = await getCollection("projects");
+
+const items = [
+  { label: "Home", href: "/", kind: "page" },
+  { label: "Stack", href: "/stack/", kind: "page" },
+  { label: "Projects", href: "/projects/", kind: "page" },
+  { label: "OSS", href: "/oss/", kind: "page" },
+  { label: "Notes", href: "/notes/", kind: "page" },
+  { label: "About", href: "/about/", kind: "page" },
+  { label: "Now", href: "/now/", kind: "page" },
+  { label: "RSS", href: "/rss.xml", kind: "page" },
+  ...posts.filter((p) => !p.data.draft).map((p) => ({
+    label: p.data.title,
+    href: `/notes/${p.id}/`,
+    kind: p.data.kind,
+  })),
+  ...projects.map((p) => ({
+    label: p.data.title,
+    href: p.data.repo ?? "/stack/",
+    kind: `project · ${p.data.category}`,
+  })),
+];
+const dataJson = JSON.stringify(items);
+---
+<div id="cmdk" hidden role="dialog" aria-label="Command palette" aria-modal="true">
+  <div class="overlay" data-close></div>
+  <div class="panel" role="document">
+    <div class="head">
+      <span class="prompt">›</span>
+      <input id="cmdk-input" type="text" autocomplete="off" spellcheck="false" placeholder="Jump to…" />
+    </div>
+    <ul id="cmdk-list" role="listbox"></ul>
+    <div class="foot"><kbd>↑</kbd><kbd>↓</kbd> navigate <span class="sep">·</span> <kbd>↵</kbd> open <span class="sep">·</span> <kbd>esc</kbd> close</div>
+  </div>
+</div>
+
+<script type="application/json" id="cmdk-data" set:html={dataJson}></script>
+
+<style>
+  #cmdk[hidden] { display: none !important; }
+  #cmdk { position: fixed; inset: 0; z-index: 40; display: grid; place-items: start center; padding-top: 12vh; }
+  .overlay { position: absolute; inset: 0; background: color-mix(in oklab, var(--bg) 60%, transparent); backdrop-filter: blur(6px); }
+  .panel {
+    position: relative;
+    width: min(560px, 92vw);
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .head { display: flex; gap: 0.5em; align-items: center; padding: var(--s-3) var(--s-4); border-bottom: 1px solid var(--rule-soft); }
+  .prompt { color: var(--signal); font-family: var(--mono); font-size: 1rem; }
+  input {
+    flex: 1; border: 0; outline: 0; background: transparent;
+    color: var(--ink); font-family: var(--mono); font-size: 0.95rem; padding: 0.4em 0;
+  }
+  ul { list-style: none; margin: 0; padding: var(--s-2) 0; max-height: 52vh; overflow-y: auto; }
+  li {
+    padding: var(--s-2) var(--s-4);
+    font-family: var(--mono);
+    font-size: 0.92rem;
+    cursor: pointer;
+    display: flex; justify-content: space-between; gap: var(--s-3);
+    color: var(--ink);
+  }
+  li[aria-selected="true"] { background: var(--bg-soft); color: var(--signal); }
+  li .k { color: var(--muted); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  .foot {
+    border-top: 1px solid var(--rule-soft);
+    padding: var(--s-2) var(--s-4);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .foot kbd { border: 1px solid var(--rule); padding: 0 0.35em; border-radius: 3px; margin: 0 0.1em; }
+  .sep { opacity: 0.4; margin: 0 0.3em; }
+</style>
+
+<script is:inline>
+  (() => {
+    if (window.__cmdkBound) return;
+    window.__cmdkBound = true;
+
+    let active = 0;
+    let filtered = [];
+
+    const getRoot = () => document.getElementById("cmdk");
+    const getInput = () => document.getElementById("cmdk-input");
+    const getList = () => document.getElementById("cmdk-list");
+    const getData = () => {
+      const el = document.getElementById("cmdk-data");
+      if (!el) return [];
+      try { return JSON.parse(el.textContent || "[]"); } catch { return []; }
+    };
+
+    const score = (q, label) => {
+      const s = label.toLowerCase();
+      const t = q.toLowerCase();
+      if (!t) return 1;
+      if (s.startsWith(t)) return 3;
+      if (s.includes(t)) return 2;
+      let i = 0;
+      for (const c of s) if (c === t[i]) i++;
+      return i === t.length ? 1 : 0;
+    };
+    const render = () => {
+      const list = getList(); if (!list) return;
+      list.innerHTML = filtered
+        .map((it, i) => `<li role="option" aria-selected="${i === active}" data-href="${it.href}"><span>${it.label}</span><span class="k">${it.kind}</span></li>`)
+        .join("");
+      const sel = list.querySelector('[aria-selected="true"]');
+      if (sel) sel.scrollIntoView({ block: "nearest" });
+    };
+    const filter = (q) => {
+      filtered = getData()
+        .map((it) => ({ it, s: score(q, it.label) }))
+        .filter((x) => x.s > 0)
+        .sort((a, b) => b.s - a.s)
+        .map((x) => x.it);
+      active = 0;
+      render();
+    };
+    const isOpen = () => { const r = getRoot(); return r && !r.hidden; };
+    const open = () => {
+      const r = getRoot(), i = getInput(); if (!r || !i) return;
+      r.hidden = false;
+      i.value = "";
+      filter("");
+      setTimeout(() => i.focus(), 0);
+    };
+    const close = () => { const r = getRoot(); if (r) r.hidden = true; };
+    const go = () => {
+      const it = filtered[active];
+      if (!it) return;
+      close();
+      window.location.href = it.href;
+    };
+
+    document.addEventListener("keydown", (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault(); isOpen() ? close() : open(); return;
+      }
+      if (e.key === "Escape" && isOpen()) {
+        e.preventDefault(); e.stopPropagation(); close(); return;
+      }
+      if (!isOpen()) return;
+      if (e.key === "ArrowDown") { e.preventDefault(); active = Math.min(active + 1, filtered.length - 1); render(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); active = Math.max(active - 1, 0); render(); }
+      else if (e.key === "Enter") { e.preventDefault(); go(); }
+    }, true);
+
+    document.addEventListener("input", (e) => {
+      if (e.target && e.target.id === "cmdk-input") filter(e.target.value);
+    });
+    document.addEventListener("click", (e) => {
+      const t = e.target;
+      if (!t) return;
+      if (t.closest && t.closest("[data-close]")) { close(); return; }
+      const li = t.closest && t.closest("#cmdk-list li");
+      if (li) {
+        const list = getList();
+        active = [...list.children].indexOf(li);
+        go();
+      }
+    });
+  })();
+</script>

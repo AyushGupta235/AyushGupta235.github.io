@@ -1,0 +1,201 @@
+---
+import Base from "../layouts/Base.astro";
+import MarginRail from "../components/MarginRail.astro";
+
+const fmt = (d: Date) => d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit" });
+
+const groups: { label: string; tag: string; items: string[] }[] = [
+  {
+    label: "Languages",
+    tag: "what I write in",
+    items: ["Python", "Go", "TypeScript", "SQL"],
+  },
+  {
+    label: "Deep learning",
+    tag: "training & inference",
+    items: [
+      "PyTorch",
+      "HuggingFace Transformers",
+      "Accelerate",
+      "PEFT / LoRA",
+      "vLLM",
+      "Flash Attention",
+      "Weights & Biases",
+    ],
+  },
+  {
+    label: "Agents & RAG",
+    tag: "patterns I lean on",
+    items: [
+      "LangGraph-style orchestration",
+      "Map-reduce extraction",
+      "Retrieval-augmented generation",
+      "Evaluation Harnesses",
+    ],
+  },
+  {
+    label: "Document Intelligence",
+    tag: "parsing the unstructured",
+    items: ["Document Parsing", "Document QA", "OCR"],
+  },
+  {
+    label: "Infra & observability",
+    tag: "where it runs",
+    items: [
+      "Docker",
+      "Kubernetes",
+      "Helm",
+      "PostgreSQL",
+      "Redis",
+      "Prometheus + Grafana",
+      "GitHub Actions",
+    ],
+  },
+];
+---
+<Base title="Stack — Ayush Gupta" description="The working toolkit. Languages, frameworks, agents, and infra I actually use.">
+  <div class="page">
+    <MarginRail
+      section="02 / Stack"
+      filed={fmt(new Date())}
+      marks={[
+        { label: "Scope", value: "Working toolkit" },
+        { label: "Updated", value: fmt(new Date()) },
+      ]}
+    />
+    <div class="main">
+      <header class="head">
+        <p class="kicker">FIELD JOURNAL · 02</p>
+        <h1>The Stack</h1>
+        <p class="lede">
+          The working toolkit — what I actually reach for when building and
+          shipping ML systems. Not a résumé, not exhaustive; see
+          <a href="/projects/">projects</a> for the repos.
+        </p>
+      </header>
+
+      <dl class="grid">
+        {groups.map((g, gi) => (
+          <div class="row" data-row data-index={gi}>
+            <dt>
+              <span class="label">{g.label}</span>
+              <span class="tag">{g.tag}</span>
+            </dt>
+            <dd>
+              {g.items.map((it, i) => (
+                <>
+                  <span class="item">{it}</span>
+                  {i < g.items.length - 1 && <span class="dot" aria-hidden="true">·</span>}
+                </>
+              ))}
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      <p class="foot-note">
+        A snapshot — the stack shifts. If something here is interesting, the
+        <a href="/notes/">notes</a> page goes deeper, and
+        <a href="/projects/">projects</a> shows what I've built with it.
+      </p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .head { margin-bottom: var(--s-7); }
+  .kicker {
+    font-family: var(--mono); color: var(--muted);
+    font-size: var(--fs-marginalia); letter-spacing: 0.22em;
+    text-transform: uppercase; margin: 0 0 var(--s-3);
+  }
+  .head h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin: 0 0 var(--s-3); }
+  .lede { color: var(--ink-soft); max-width: 56ch; margin: 0; font-size: 1.02rem; line-height: 1.55; }
+
+  .grid {
+    margin: 0 0 var(--s-7);
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--s-5);
+    padding: var(--s-4) 0;
+    border-bottom: 1px solid var(--rule-soft);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 540ms var(--easing), transform 540ms var(--easing);
+  }
+  .row.is-in { opacity: 1; transform: none; }
+  .row dt { margin: 0; display: flex; flex-direction: column; gap: 0.2em; }
+  .row dd { margin: 0; line-height: 1.9; }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--signal);
+    font-weight: 700;
+  }
+  .tag {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.2;
+  }
+  .item {
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .dot {
+    color: var(--rule);
+    margin: 0 0.5em;
+    user-select: none;
+  }
+
+  .foot-note {
+    color: var(--muted);
+    font-style: italic;
+    font-family: var(--serif);
+    font-size: 1rem;
+    max-width: 60ch;
+    border-top: 1px solid var(--rule-soft);
+    padding-top: var(--s-4);
+  }
+
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr; gap: var(--s-2); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .row { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const rows = document.querySelectorAll("[data-row]");
+    if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((en) => {
+            if (en.isIntersecting) {
+              const el = en.target;
+              const delay = (Number(el.getAttribute("data-index")) || 0) * 70;
+              setTimeout(() => el.classList.add("is-in"), delay);
+              io.unobserve(el);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      rows.forEach((r) => io.observe(r));
+    } else {
+      rows.forEach((r) => r.classList.add("is-in"));
+    }
+  })();
+</script>

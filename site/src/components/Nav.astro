@@ -1,0 +1,79 @@
+---
+const { pathname } = Astro.url;
+const items = [
+  { href: "/", label: "Index" },
+  { href: "/stack/", label: "Stack" },
+  { href: "/projects/", label: "Projects" },
+  { href: "/oss/", label: "OSS" },
+  { href: "/notes/", label: "Notes" },
+  { href: "/about/", label: "About" },
+  { href: "/now/", label: "Now" },
+];
+const isActive = (href: string) =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
+---
+<header class="nav" aria-label="Primary">
+  <a class="brand" href="/">
+    <span class="brand-name">Ayush Gupta</span>
+    <span class="brand-sub">— field journal</span>
+  </a>
+  <nav>
+    <ul>
+      {items.map((it) => (
+        <li>
+          <a href={it.href} aria-current={isActive(it.href) ? "page" : undefined}>{it.label}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .nav {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--s-5);
+    padding: var(--s-5) var(--s-5) var(--s-3);
+    max-width: 1080px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--rule-soft);
+    flex-wrap: wrap;
+  }
+  .brand {
+    color: var(--ink);
+    border-bottom: 0;
+    font-family: var(--mono);
+    letter-spacing: 0.02em;
+  }
+  .brand-name { font-weight: 700; }
+  .brand-sub {
+    color: var(--muted);
+    font-style: italic;
+    font-family: var(--serif);
+    margin-left: 0.4em;
+    font-size: 1.1em;
+  }
+  nav ul {
+    display: flex;
+    gap: var(--s-4);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+  }
+  nav a {
+    color: var(--ink);
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15em 0;
+  }
+  nav a[aria-current="page"] {
+    color: var(--signal);
+    border-bottom: 1px solid var(--signal);
+  }
+  @media (max-width: 640px) {
+    .nav { flex-direction: column; align-items: flex-start; gap: var(--s-3); }
+  }
+</style>
