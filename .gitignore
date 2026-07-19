@@ -7,3 +7,7 @@ site/.astro/
 
 # Personal / private
 daily-log.md
+
+# Unlisted portfolio page — slug + content. Supplied in CI from the
+# PORTFOLIO_YAML_B64 secret. Must never be committed to this public repo.
+site/private/

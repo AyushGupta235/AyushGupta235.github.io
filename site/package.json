@@ -9,7 +9,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "edit": "node scripts/edit-content.mjs",
+    "publish": "node scripts/publish-content.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^6.0.2",

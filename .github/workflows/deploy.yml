@@ -20,6 +20,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Restore private page data
+        # The unlisted work page's slug and content are not in this public repo.
+        # Without the secret the file is absent and the page is simply not built.
+        env:
+          PORTFOLIO_YAML_B64: ${{ secrets.PORTFOLIO_YAML_B64 }}
+        run: |
+          if [ -n "$PORTFOLIO_YAML_B64" ]; then
+            mkdir -p site/private
+            printf '%s' "$PORTFOLIO_YAML_B64" | base64 -d > site/private/portfolio.yaml
+            echo "private page data restored"
+          else
+            echo "PORTFOLIO_YAML_B64 not set — skipping the unlisted page"
+          fi
       - name: Build with Astro
         uses: withastro/action@v3
         with:
